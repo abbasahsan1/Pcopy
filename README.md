@@ -1,5 +1,8 @@
 # pcopy - Project Copy Tool
 
+[![PyPI version](https://badge.fury.io/py/pcopy-tool.svg)](https://badge.fury.io/py/pcopy-tool)
+[![PyPI downloads](https://img.shields.io/pypi/dm/pcopy-tool.svg)](https://pypi.org/project/pcopy-tool/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pcopy-tool.svg)](https://pypi.org/project/pcopy-tool/)
 [![GitHub release](https://img.shields.io/github/v/release/abbasahsan1/Pcopy)](https://github.com/abbasahsan1/Pcopy/releases/latest)
 [![License](https://img.shields.io/github/license/abbasahsan1/Pcopy)](LICENSE)
 
@@ -9,14 +12,26 @@ A cross-platform command-line tool that reads all text-based files in a specifie
 
 ## 📥 Quick Install
 
-### Option 1: Standalone Executable (Windows - Recommended)
+### Option 1: Install from PyPI (Recommended)
+**Easiest way - works on all platforms!**
+
+```bash
+pip install pcopy-tool
+```
+
+Then use immediately:
+```bash
+pcopy tree
+```
+
+### Option 2: Standalone Executable (Windows)
 **No Python required!**
 
 1. Download the latest release: [pcopy-windows-x64.zip](https://github.com/abbasahsan1/Pcopy/releases/latest)
 2. Extract and run: `pcopy.exe tree`
 3. Done! ✅
 
-### Option 2: Python Script (All Platforms)
+### Option 3: From Source
 
 ## Installation
 
