@@ -1,6 +1,22 @@
 # pcopy - Project Copy Tool
 
+[![GitHub release](https://img.shields.io/github/v/release/abbasahsan1/Pcopy)](https://github.com/abbasahsan1/Pcopy/releases/latest)
+[![License](https://img.shields.io/github/license/abbasahsan1/Pcopy)](LICENSE)
+
 A cross-platform command-line tool that reads all text-based files in a specified folder, merges them into a single file called `PROMPT.txt`, and copies its entire content to the clipboard.
+
+**Perfect for preparing code context for AI assistants like ChatGPT and Claude!**
+
+## 📥 Quick Install
+
+### Option 1: Standalone Executable (Windows - Recommended)
+**No Python required!**
+
+1. Download the latest release: [pcopy-windows-x64.zip](https://github.com/abbasahsan1/Pcopy/releases/latest)
+2. Extract and run: `pcopy.exe tree`
+3. Done! ✅
+
+### Option 2: Python Script (All Platforms)
 
 ## Installation
 
@@ -131,13 +147,87 @@ print("Hello world!")
 
 ## Use Cases
 
-Perfect for:
-- Preparing code context for LLMs (ChatGPT, Claude, etc.)
-- Creating project snapshots
-- Code reviews and sharing
-- Documentation generation
-- Quick project overviews
+### 1. Prepare Context for AI Assistants
+```bash
+cd my-project
+pcopy tree
+# Paste clipboard into ChatGPT/Claude with your question!
+```
 
-## License
+### 2. Code Reviews
+```bash
+pcopy tree feature-branch/
+# Share PROMPT.txt with reviewers
+```
 
-MIT License
+### 3. Project Documentation
+```bash
+pcopy tree
+# Quick overview of entire codebase
+```
+
+### 4. Project Snapshots
+```bash
+# Generate complete code listing
+pcopy tree > project-snapshot.txt
+```
+
+## 🚀 Building Standalone Executable
+
+Want to create your own standalone executable?
+
+```bash
+# Install PyInstaller
+pip install pyinstaller
+
+# Build executable
+python -m PyInstaller --onefile --console --name pcopy pcopy.py
+
+# Output: dist/pcopy.exe (Windows) or dist/pcopy (Linux/Mac)
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+- Improve documentation
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 📝 Changelog
+
+See [Releases](https://github.com/abbasahsan1/Pcopy/releases) for version history.
+
+## 🐛 Troubleshooting
+
+**"No text files found"**
+- Check your `.pcopyignore` patterns
+- Verify you're in the correct directory
+
+**Clipboard not working on Linux**
+```bash
+sudo apt-get install xclip
+```
+
+**Permission errors**
+- Run with appropriate permissions
+- Check file/folder access rights
+
+## ⭐ Star this project
+
+If you find pcopy useful, please give it a star on GitHub!
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with Python 3.10
+- [pyperclip](https://github.com/asweigart/pyperclip) for clipboard operations
+- [pathspec](https://github.com/cpburnz/python-pathspec) for pattern matching
+- [PyInstaller](https://www.pyinstaller.org/) for executable creation
