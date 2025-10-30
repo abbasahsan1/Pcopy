@@ -1,0 +1,235 @@
+🧰 Project Specification: pcopy
+1. Overview
+
+pcopy is a cross-platform command-line tool that reads all text-based files in a specified folder, merges them into a single file called PROMPT.txt, and copies its entire content to the clipboard.
+
+Its primary use is to quickly prepare project context (source code, configs, etc.) for Large Language Models (LLMs) without manually copy-pasting each file.
+
+Optionally, it can include a file tree and respect ignore patterns defined in .pcopyignore.
+
+2. Command Syntax
+pcopy [tree] [path]
+
+Arguments:
+Argument	Description
+path	(Optional) Path to the target directory. If omitted, uses the current working directory.
+tree	(Optional keyword) If included, the tool will generate and prepend a file tree structure in the PROMPT.txt output.
+Examples:
+pcopy                          # Use current directory, no file tree
+pcopy /home/user/project       # Use specific directory
+pcopy tree                     # Add file tree for current directory
+pcopy tree "C:\Projects\App"   # Add file tree for given path
+
+3. Core Features
+3.1 File Gathering
+
+Recursively collects text-based files within the given directory.
+
+Automatically ignores binary or non-text files based on:
+
+File extension blacklist
+
+Binary content detection (byte scan)
+
+.pcopyignore patterns
+
+3.2 .pcopyignore Support
+
+Located in the root of the target folder.
+
+Uses .gitignore-style patterns:
+
+*, **, and ? wildcards supported.
+
+# indicates comments.
+
+!pattern for negation (re-inclusion).
+
+Applies recursively to files and folders under that directory.
+
+Automatically ignores common transient or system directories (.git, .idea, __pycache__, node_modules, etc.) even if not listed.
+
+Example .pcopyignore:
+
+# Ignore build artifacts
+build/
+dist/
+*.log
+
+# Ignore secrets
+.env
+secrets.json
+
+# Keep configs even if in ignored dirs
+!config.yaml
+
+3.3 Output File Structure
+
+PROMPT.txt is created in the same directory as the source folder.
+
+Format:
+
+==================================================================
+📁 FILE TREE
+==================================================================
+
+project/
+├── main.py
+├── config.yaml
+└── utils/
+    ├── helper.py
+    └── logger.py
+
+==================================================================
+📄 FILE CONTENTS
+==================================================================
+
+Filename: main.py
+Content:
+{
+print("Hello world!")
+}
+
+------------------------------------------------------------------
+
+Filename: config.yaml
+Content:
+{
+settings:
+  debug: true
+}
+------------------------------------------------------------------
+
+
+If tree is not specified, the 📁 FILE TREE section is omitted.
+
+3.4 Clipboard Copy
+
+The entire content of PROMPT.txt is automatically copied to the system clipboard after creation.
+
+Uses pyperclip
+, which supports:
+
+Windows (clip.exe)
+
+Linux (via xclip or xsel)
+
+WSL (integrated with Windows clipboard if available)
+
+If clipboard copy fails (e.g., missing dependencies), it shows a clear warning message.
+
+3.5 Text File Detection
+
+A file is considered text if:
+
+Its extension is in the whitelist (configurable internally), or
+
+It passes a binary check (no excessive non-printable characters in first 4096 bytes).
+
+Common included extensions:
+
+.txt .md .csv .json .yaml .yml .xml .html .css .scss
+.py .js .ts .tsx .jsx .c .cpp .h .hpp .cs .java .php .rb
+.go .rs .ini .cfg .conf .sh .bat .sql .toml
+
+
+Common excluded extensions:
+
+.exe .dll .so .zip .rar .7z .tar .gz .jpg .png .jpeg .gif .bmp
+.pdf .obj .apk .bin .iso .mp4 .mp3 .wav .tmp .meta .db
+
+4. File Tree Generation
+
+If tree argument is used, the file tree:
+
+Displays directories and files recursively with indentation.
+
+Uses ASCII branch symbols (├──, └──) for clear hierarchy.
+
+Hidden files (.*) are ignored unless explicitly included in .pcopyignore.
+
+5. CLI Output and Logging
+Example console output:
+> pcopy tree ./myproject
+
+🧩 pcopy v1.0.0
+📂 Target directory: ./myproject
+📄 12 text files detected (3 ignored by .pcopyignore)
+🌳 File tree included
+✍️  Writing PROMPT.txt...
+📋  Copied content to clipboard (158 KB)
+✅  Done! File saved at ./myproject/PROMPT.txt
+
+6. Installation & PATH Integration
+6.1 Installation
+pip install pcopy-tool
+
+
+Or manual installation:
+
+git clone https://github.com/yourname/pcopy
+cd pcopy
+python setup.py install
+
+6.2 PATH Integration
+
+To make pcopy available globally:
+
+On Windows:
+
+Adds install directory to %APPDATA%\Python\Scripts or modifies PATH variable via setx.
+
+On Linux/WSL:
+
+Creates a symlink:
+
+sudo ln -s $(which python3) /usr/local/bin/pcopy
+
+
+Or adds:
+
+export PATH=$PATH:~/.local/bin
+
+
+to .bashrc / .zshrc.
+
+7. Error Handling & Edge Cases
+Case	Behavior
+No text files found	Warn user and exit gracefully.
+.pcopyignore missing	Proceed without ignoring.
+Invalid path	Show “Directory not found.”
+Clipboard copy fails	Show warning, still create PROMPT.txt.
+Very large directory	Skip files > N MB (configurable, e.g., 5 MB default).
+Non-UTF8 text	Attempt utf-8 decode, fallback to latin-1 safely.
+8. Dependencies
+Package	Purpose
+pyperclip	Cross-platform clipboard support
+pathspec	.pcopyignore pattern matching
+argparse	Command-line argument parsing
+os, sys, pathlib	File operations
+chardet (optional)	Charset detection for robustness
+
+Install:
+
+pip install pyperclip pathspec chardet
+
+9. Optional Future Enhancements
+Feature	Description
+--no-clipboard	Skip clipboard copy.
+--stdout	Print merged result to terminal.
+.pcopyrc	Global configuration (extensions, max file size, etc.).
+File type summary	Count of file types included.
+Progress bar	For large projects.
+.pcopycache	Cache previous runs to speed up repeated use.
+10. Directory Layout (if distributed as a package)
+pcopy/
+├── __init__.py
+├── __main__.py
+├── cli.py
+├── core.py
+├── utils/
+│   ├── file_tree.py
+│   ├── filters.py
+│   └── clipboard.py
+├── setup.py
+└── README.md

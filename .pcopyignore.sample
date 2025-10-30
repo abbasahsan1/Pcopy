@@ -1,0 +1,47 @@
+# .pcopyignore - Sample ignore patterns for pcopy
+# Use .gitignore syntax
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Dependencies
+node_modules/
+vendor/
+packages/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment and secrets
+.env
+.env.local
+secrets.json
+*.key
+*.pem
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large files
+*.zip
+*.tar.gz
+*.rar
+
+# Keep specific files even if in ignored directories
+# !important-config.yaml
