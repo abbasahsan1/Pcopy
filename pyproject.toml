@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pcopy-tool"
+version = "1.0.0"
+description = "Cross-platform CLI tool to merge text files and copy to clipboard for LLM context"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Abbas Ahsan", email = "abbasahsan1@users.noreply.github.com"}
+]
+maintainers = [
+    {name = "Abbas Ahsan", email = "abbasahsan1@users.noreply.github.com"}
+]
+keywords = ["clipboard", "file-merger", "llm", "ai", "context", "development-tools", "chatgpt", "claude"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Environment :: Console",
+]
+dependencies = [
+    "pyperclip>=1.8.0",
+    "pathspec>=0.11.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller>=6.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/abbasahsan1/Pcopy"
+Documentation = "https://github.com/abbasahsan1/Pcopy#readme"
+Repository = "https://github.com/abbasahsan1/Pcopy"
+"Bug Reports" = "https://github.com/abbasahsan1/Pcopy/issues"
+Changelog = "https://github.com/abbasahsan1/Pcopy/releases"
+
+[project.scripts]
+pcopy = "pcopy:main"
+
+[tool.setuptools]
+py-modules = ["pcopy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pcopy*"]
